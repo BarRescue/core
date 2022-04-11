@@ -2,10 +2,7 @@ package com.trainetic.entity.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.trainetic.entity.Auditable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -18,7 +15,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends Auditable {
-
     @NotBlank
     @Column(unique = true)
     private String email;

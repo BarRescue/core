@@ -1,6 +1,7 @@
 package com.trainetic.logic;
 
 import com.trainetic.entity.auth.User;
+import com.trainetic.exception.GeneralException;
 import io.smallrye.jwt.build.Jwt;
 import io.smallrye.jwt.build.JwtClaimsBuilder;
 
@@ -14,7 +15,7 @@ import java.util.Base64;
 @ApplicationScoped
 public class TokenLogic {
 
-    public String generateToken(User user) throws Exception {
+    public String generateToken(User user) {
         PrivateKey pk = readPrivateKey("/privateKey.pem");
 
         JwtClaimsBuilder claims = Jwt.claims();
@@ -24,8 +25,8 @@ public class TokenLogic {
 
         claims.subject(user.getId().toString());
         claims.expiresAt(exp);
-        claims.issuer("https://example.com/issuer");
-        claims.groups("USER");
+        claims.issuer("https://trainetic.nl");
+        claims.groups(user.getRole().getName());
 
         return claims.jws().sign(pk);
     }
@@ -37,11 +38,13 @@ public class TokenLogic {
      * @return PrivateKey
      * @throws Exception on decode failure
      */
-    public static PrivateKey readPrivateKey(final String pemResName) throws Exception {
+    public static PrivateKey readPrivateKey(final String pemResName) {
         try (InputStream contentIS = TokenLogic.class.getResourceAsStream(pemResName)) {
             byte[] tmp = new byte[4096];
             int length = contentIS.read(tmp);
             return decodePrivateKey(new String(tmp, 0, length, "UTF-8"));
+        } catch(Exception e) {
+            throw new GeneralException("Error while reading JWT");
         }
     }
 
