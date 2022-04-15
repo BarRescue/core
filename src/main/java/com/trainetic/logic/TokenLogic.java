@@ -1,6 +1,6 @@
 package com.trainetic.logic;
 
-import com.trainetic.entity.auth.User;
+import com.trainetic.auth.entity.User;
 import com.trainetic.exception.GeneralException;
 import io.smallrye.jwt.build.Jwt;
 import io.smallrye.jwt.build.JwtClaimsBuilder;
