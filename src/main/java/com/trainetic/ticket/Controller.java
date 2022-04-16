@@ -1,7 +1,6 @@
 package com.trainetic.ticket;
 
-import com.trainetic.logic.PermissionRole;
-import com.trainetic.ticket.dto.TicketDTO;
+import com.trainetic.dto.TicketDTO;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;

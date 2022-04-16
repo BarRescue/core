@@ -1,4 +1,4 @@
-package com.trainetic.auth.entity;
+package com.trainetic.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 public enum RoleType {
 
     NORMAL(Values.NORMAL),
-    COACH(Values.COACH);
+    COACH(Values.COACH),
+    ORGANISATION_MANAGER(Values.ORGANISATION_MANAGER);
 
     private final String value;
 
     public static class Values {
         static final String NORMAL = "user";
         static final String COACH = "coach";
+        static final String ORGANISATION_MANAGER = "organisation_manager";
     }
 }

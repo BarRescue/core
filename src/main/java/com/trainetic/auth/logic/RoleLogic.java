@@ -1,7 +1,7 @@
 package com.trainetic.auth.logic;
 
 import com.trainetic.auth.service.RoleService;
-import com.trainetic.auth.entity.Role;
+import com.trainetic.entity.Role;
 import com.trainetic.exception.ResourceNotFoundException;
 
 import javax.enterprise.context.ApplicationScoped;

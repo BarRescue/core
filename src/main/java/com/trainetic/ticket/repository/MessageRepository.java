@@ -1,6 +1,6 @@
 package com.trainetic.ticket.repository;
 
-import com.trainetic.ticket.entity.Message;
+import com.trainetic.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

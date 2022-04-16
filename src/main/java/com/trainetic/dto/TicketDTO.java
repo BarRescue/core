@@ -1,4 +1,4 @@
-package com.trainetic.ticket.dto;
+package com.trainetic.dto;
 
 import lombok.Data;
 

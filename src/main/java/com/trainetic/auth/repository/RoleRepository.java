@@ -1,6 +1,6 @@
 package com.trainetic.auth.repository;
 
-import com.trainetic.auth.entity.Role;
+import com.trainetic.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

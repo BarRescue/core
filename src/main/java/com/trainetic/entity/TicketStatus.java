@@ -1,4 +1,4 @@
-package com.trainetic.ticket.entity;
+package com.trainetic.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.trainetic.auth.entity;
+package com.trainetic.entity;
 
 import com.trainetic.entity.Auditable;
 import lombok.AllArgsConstructor;

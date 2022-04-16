@@ -1,9 +1,10 @@
 package com.trainetic.auth.service;
 
-import com.trainetic.auth.entity.User;
+import com.trainetic.entity.User;
 import com.trainetic.auth.repository.UserRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,8 +25,11 @@ public class UserService {
         return repository.save(user);
     }
 
-    public Optional<User> findUserByEmail(String email) {
-        return repository.findByEmail(email);
+    public List<User> findUsersByEmail(String email) {
+        return repository.findAllByEmail(email);
     }
 
+    public Optional<User> findUserByUsername(String username) {
+        return repository.findByUsername(username);
+    }
 }

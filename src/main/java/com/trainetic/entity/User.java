@@ -1,7 +1,6 @@
-package com.trainetic.auth.entity;
+package com.trainetic.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.trainetic.entity.Auditable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +18,9 @@ public class User extends Auditable {
     @Column(unique = true)
     private String email;
 
+    @NotBlank
+    private String username;
+
     @JsonIgnore
     @NotBlank
     private String password;
@@ -29,16 +31,22 @@ public class User extends Auditable {
     @OneToOne
     private Role role;
 
-    @NotBlank
-    private Integer schemeCount;
-
-    @NotBlank
-    private Integer customerCount;
+    @ManyToOne
+    @JoinColumn(name = "organisation_id", referencedColumnName = "id")
+    private Organisation organisation;
 
     @OneToMany(mappedBy = "coach")
     private Set<User> clients = new HashSet<>();
 
-    public void addClient(User user) {
-        this.clients.add(user);
+    @ManyToOne
+    @JoinColumn(name = "coach_id", referencedColumnName = "id")
+    private User coach;
+
+    public User(String email, String username, String password, String firstName, Role role) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.role = role;
     }
 }

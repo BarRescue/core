@@ -2,7 +2,8 @@ package com.trainetic.auth.controller;
 
 
 import com.trainetic.auth.logic.UserLogic;
-import com.trainetic.auth.dto.UserDTO;
+import com.trainetic.dto.InitialUserDTO;
+import com.trainetic.dto.UserDTO;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
@@ -24,8 +25,8 @@ public class UserController {
     @POST
     @Path("register")
     @PermitAll
-    public Response register(UserDTO dto) {
-        return Response.ok(userLogic.createUser(dto)).build();
+    public Response register(InitialUserDTO dto) {
+        return Response.ok(userLogic.createInitialUser(dto)).build();
     }
 
     @POST

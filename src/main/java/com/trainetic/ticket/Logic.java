@@ -1,10 +1,10 @@
 package com.trainetic.ticket;
 
-import com.trainetic.auth.entity.RoleType;
-import com.trainetic.auth.entity.User;
+import com.trainetic.entity.RoleType;
+import com.trainetic.entity.User;
 import com.trainetic.auth.logic.UserLogic;
-import com.trainetic.ticket.dto.TicketDTO;
-import com.trainetic.ticket.entity.Ticket;
+import com.trainetic.dto.TicketDTO;
+import com.trainetic.entity.Ticket;
 import com.trainetic.ticket.service.MessageService;
 import com.trainetic.ticket.service.TicketService;
 
@@ -36,5 +36,7 @@ public class Logic {
         if(creator.getRole().getName().equals(RoleType.COACH.getValue())) {
 
         }
+
+        return new Ticket();
     }
 }

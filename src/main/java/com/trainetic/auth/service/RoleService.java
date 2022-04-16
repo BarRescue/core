@@ -1,6 +1,6 @@
 package com.trainetic.auth.service;
 
-import com.trainetic.auth.entity.Role;
+import com.trainetic.entity.Role;
 import com.trainetic.auth.repository.RoleRepository;
 
 import javax.enterprise.context.ApplicationScoped;

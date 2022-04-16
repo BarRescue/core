@@ -1,7 +1,5 @@
-package com.trainetic.ticket.entity;
+package com.trainetic.entity;
 
-import com.trainetic.auth.entity.User;
-import com.trainetic.entity.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
