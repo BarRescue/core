@@ -9,13 +9,15 @@ public enum PermissionRole {
 
     USER(Values.USER),
     COACH(Values.COACH),
-    ADMIN(Values.ADMIN);
+    ADMIN(Values.ADMIN),
+    ORGANISATION_MANAGER(Values.ORGANISATION_MANAGER);
 
     private final String value;
 
     public static class Values {
-        static final String USER = "user";
-        static final String COACH = "coach";
-        static final String ADMIN = "admin";
+        public static final String USER = "user";
+        public static final String COACH = "coach";
+        public static final String ADMIN = "admin";
+        public static final String ORGANISATION_MANAGER = "organisation_manager";
     }
 }

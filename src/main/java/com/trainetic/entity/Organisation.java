@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -36,7 +39,23 @@ public class Organisation extends Auditable {
     @JsonIgnore
     private Integer customerCount = 1;
 
+    @JsonIgnore
+    private Integer coachCount = 1;
+
     @OneToMany(mappedBy = "organisation")
     @JsonIgnore
     private Set<User> coaches;
+
+    public Boolean exceedsCoachesLimit() {
+        return this.coaches.size() >= this.coachCount;
+    }
+
+    public Boolean exceedsClientsLimit() {
+        int total = this.coaches.stream().map(User::getClients)
+                .filter(Objects::nonNull)
+                .mapToInt(Set::size)
+                .sum();
+
+        return total >= this.customerCount;
+    }
 }

@@ -15,10 +15,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class User extends Auditable {
     @NotBlank
-    @Column(unique = true)
     private String email;
 
     @NotBlank
+    @Column(unique = true)
     private String username;
 
     @JsonIgnore
@@ -35,9 +35,11 @@ public class User extends Auditable {
     @JoinColumn(name = "organisation_id", referencedColumnName = "id")
     private Organisation organisation;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "coach")
     private Set<User> clients = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "coach_id", referencedColumnName = "id")
     private User coach;

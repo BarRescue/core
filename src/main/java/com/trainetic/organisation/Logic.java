@@ -1,8 +1,14 @@
 package com.trainetic.organisation;
 
+import com.trainetic.auth.logic.UserLogic;
+import com.trainetic.dto.UserDTO;
 import com.trainetic.entity.Organisation;
+import com.trainetic.entity.Role;
+import com.trainetic.entity.RoleType;
+import com.trainetic.entity.User;
 import com.trainetic.exception.GeneralException;
 import com.trainetic.exception.ResourceNotFoundException;
+import org.modelmapper.ModelMapper;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.Optional;
@@ -12,9 +18,11 @@ import java.util.UUID;
 public class Logic {
 
     private final Service service;
+    private final ModelMapper modelMapper;
 
     public Logic(Service service) {
         this.service = service;
+        this.modelMapper = new ModelMapper();
     }
 
     public void organisationExists(String name) {

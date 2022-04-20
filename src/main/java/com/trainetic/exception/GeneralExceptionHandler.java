@@ -9,7 +9,7 @@ public class GeneralExceptionHandler implements ExceptionMapper<GeneralException
 
     @Override
     public Response toResponse(GeneralException e) {
-        return Response.status(Response.Status.BAD_REQUEST).build();
+        return Response.status(400, e.getMessage()).build();
     }
 
 }

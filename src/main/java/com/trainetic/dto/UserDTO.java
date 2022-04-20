@@ -20,5 +20,5 @@ public class UserDTO {
 
     private RoleType accountType;
 
-    private String organisationId;
+    private String coachId;
 }

@@ -72,29 +72,46 @@ public class UserLogic {
             return tokenLogic.generateToken(user.get());
         }
 
-        throw new GeneralException("Username or password is incorrect.");
+        throw new GeneralException("ERROR: Username or password is incorrect.");
     }
 
     // ToDo: Validate function is working.
-    public User createUser(UserDTO dto, String coachId) {
+    public User createUser(UserDTO dto, String userRequestId) {
         if(service.findUserByUsername(dto.getUsername()).isPresent()) {
-            throw new GeneralException("User already exists.");
+            throw new GeneralException("ERROR: User already exists.");
         }
+
+        User requestUser = this.getUser(userRequestId);
 
         // Get role, if not exists, throw exception.
         Role role = this.roleLogic.findByName(dto.getAccountType().getValue());
 
         User user = this.modelMapper.map(dto, User.class);
+        user.setPassword(BcryptUtil.bcryptHash(dto.getPassword()));
         user.setRole(role);
 
         if(dto.getAccountType().equals(RoleType.COACH)) {
-            Organisation organisation = this.organisationLogic.getOrganisation(UUID.fromString(dto.getOrganisationId()));
 
-            user.setOrganisation(organisation);
+            if(requestUser.getOrganisation().exceedsCoachesLimit()) {
+                System.out.println("Coach add limit");
+                throw new GeneralException("ERROR: Please increase your subscription to add another coach.");
+            }
+
+            user.setOrganisation(requestUser.getOrganisation());
         }
 
-        if(dto.getAccountType().equals(RoleType.NORMAL)) {
-            User coach = this.getUser(coachId);
+        if(dto.getAccountType().equals(RoleType.NORMAL) && dto.getCoachId() != null) {
+            User coach = this.getUser(dto.getCoachId());
+
+            if(!coach.getOrganisation().getOrganisationName().equals(requestUser.getOrganisation().getOrganisationName())) {
+                throw new GeneralException("ERROR: Coach organisation doesnt match the requesting user!");
+            }
+
+            if(requestUser.getOrganisation().exceedsClientsLimit()) {
+                System.out.println("Client add limit");
+                throw new GeneralException("ERROR: Please increase your subscription to add another client.");
+            }
+
             user.setCoach(coach);
         }
 
