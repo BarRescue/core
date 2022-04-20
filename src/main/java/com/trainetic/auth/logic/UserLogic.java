@@ -9,6 +9,7 @@ import com.trainetic.entity.RoleType;
 import com.trainetic.entity.User;
 import com.trainetic.exception.GeneralException;
 import com.trainetic.exception.ResourceNotFoundException;
+import com.trainetic.logic.PermissionRole;
 import com.trainetic.logic.TokenLogic;
 import com.trainetic.organisation.Logic;
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -34,7 +35,6 @@ public class UserLogic {
         this.tokenLogic = tokenLogic;
         this.roleLogic = roleLogic;
         this.organisationLogic = organisationLogic;
-
         this.modelMapper = new ModelMapper();
     }
 
@@ -75,8 +75,7 @@ public class UserLogic {
         throw new GeneralException("ERROR: Username or password is incorrect.");
     }
 
-    // ToDo: Validate function is working.
-    public User createUser(UserDTO dto, String userRequestId) {
+    public User createUserForOrganisation(UserDTO dto, String userRequestId) {
         if(service.findUserByUsername(dto.getUsername()).isPresent()) {
             throw new GeneralException("ERROR: User already exists.");
         }
@@ -92,8 +91,11 @@ public class UserLogic {
 
         if(dto.getAccountType().equals(RoleType.COACH)) {
 
+            if(!requestUser.getRole().getName().equals(PermissionRole.Values.ORGANISATION_MANAGER)) {
+                throw new GeneralException("You are not allowed to add another coach to the organisation");
+            }
+
             if(requestUser.getOrganisation().exceedsCoachesLimit()) {
-                System.out.println("Coach add limit");
                 throw new GeneralException("ERROR: Please increase your subscription to add another coach.");
             }
 
@@ -108,7 +110,6 @@ public class UserLogic {
             }
 
             if(requestUser.getOrganisation().exceedsClientsLimit()) {
-                System.out.println("Client add limit");
                 throw new GeneralException("ERROR: Please increase your subscription to add another client.");
             }
 

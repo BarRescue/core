@@ -32,8 +32,8 @@ public class Controller {
 
     @Path("/add/user")
     @POST
-    @RolesAllowed({PermissionRole.Values.ORGANISATION_MANAGER})
+    @RolesAllowed({PermissionRole.Values.ORGANISATION_MANAGER, PermissionRole.Values.COACH})
     public Response addUserToOrganisation(@Context SecurityContext cx, UserDTO dto) {
-        return Response.ok(this.userLogic.createUser(dto, cx.getUserPrincipal().getName())).build();
+        return Response.ok(this.userLogic.createUserForOrganisation(dto, cx.getUserPrincipal().getName())).build();
     }
 }
