@@ -1,7 +1,6 @@
 package com.trainetic.exception;
 
 import java.io.Serializable;
-import java.util.function.Supplier;
 
 public class ResourceNotFoundException extends
         RuntimeException implements Serializable {
