@@ -2,6 +2,7 @@ package com.trainetic.features.organisation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.trainetic.entity.Auditable;
+import com.trainetic.features.auth.RoleType;
 import com.trainetic.features.auth.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
@@ -32,29 +34,10 @@ public class Organisation extends Auditable {
 
     private String organisationTelephone;
 
-    @JsonIgnore
-    private Integer schemeCount = 2;
-
-    @JsonIgnore
-    private Integer customerCount = 1;
-
-    @JsonIgnore
-    private Integer coachCount = 1;
+    @OneToOne
+    private Permission permission;
 
     @OneToMany(mappedBy = "organisation")
     @JsonIgnore
-    private Set<User> coaches;
-
-    public Boolean exceedsCoachesLimit() {
-        return this.coaches.size() >= this.coachCount;
-    }
-
-    public Boolean exceedsClientsLimit() {
-        int total = this.coaches.stream().map(User::getClients)
-                .filter(Objects::nonNull)
-                .mapToInt(Set::size)
-                .sum();
-
-        return total >= this.customerCount;
-    }
+    private Set<User> users;
 }

@@ -38,10 +38,6 @@ public class User extends Auditable {
     private Organisation organisation;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "coach")
-    private Set<User> clients = new HashSet<>();
-
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "coach_id", referencedColumnName = "id")
     private User coach;

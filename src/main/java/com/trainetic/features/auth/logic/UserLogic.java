@@ -93,7 +93,7 @@ public class UserLogic {
                 throw new GeneralException("You are not allowed to add another coach to the organisation");
             }
 
-            if(requestUser.getOrganisation().exceedsCoachesLimit()) {
+            if(requestUser.getOrganisation().getPermission().exceedsCoachesLimit()) {
                 throw new GeneralException("ERROR: Please increase your subscription to add another coach.");
             }
 
@@ -107,7 +107,7 @@ public class UserLogic {
                 throw new GeneralException("ERROR: Coach organisation doesnt match the requesting user!");
             }
 
-            if(requestUser.getOrganisation().exceedsClientsLimit()) {
+            if(requestUser.getOrganisation().getPermission().exceedsClientsLimit()) {
                 throw new GeneralException("ERROR: Please increase your subscription to add another client.");
             }
 
