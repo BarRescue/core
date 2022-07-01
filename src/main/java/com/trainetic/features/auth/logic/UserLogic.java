@@ -1,5 +1,6 @@
 package com.trainetic.features.auth.logic;
 
+import com.trainetic.exception.ResourceExistsException;
 import com.trainetic.features.auth.service.UserService;
 import com.trainetic.features.auth.InitialUserDTO;
 import com.trainetic.features.auth.UserDTO;
@@ -40,10 +41,12 @@ public class UserLogic {
         return service.findUserById(UUID.fromString(id)).orElseThrow(ResourceNotFoundException::new);
     }
 
+    public void doesUserExists(String username) {
+        service.findUserByUsername(username).orElseThrow(ResourceExistsException::new);
+    }
+
     public String createInitialUser(InitialUserDTO dto) {
-        if(service.findUserByUsername(dto.getUsername()).isPresent()) {
-            throw new GeneralException("User already exists.");
-        }
+        this.doesUserExists(dto.getUsername());
 
         // Get role, if not exists, throw exception.
         Role role = this.roleLogic.findByName(RoleType.ORGANISATION_MANAGER.getValue());
@@ -74,9 +77,7 @@ public class UserLogic {
     }
 
     public User createUserForOrganisation(UserDTO dto, String userRequestId) {
-        if(service.findUserByUsername(dto.getUsername()).isPresent()) {
-            throw new GeneralException("ERROR: User already exists.");
-        }
+        this.doesUserExists(dto.getUsername());
 
         User requestUser = this.getUser(userRequestId);
 

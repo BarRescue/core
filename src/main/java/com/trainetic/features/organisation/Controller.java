@@ -5,10 +5,7 @@ import com.trainetic.features.auth.UserDTO;
 import com.trainetic.logic.PermissionRole;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -33,4 +30,12 @@ public class Controller {
     public Response addUserToOrganisation(@Context SecurityContext cx, UserDTO dto) {
         return Response.ok(this.userLogic.createUserForOrganisation(dto, cx.getUserPrincipal().getName())).build();
     }
+
+    @GET
+    @RolesAllowed({PermissionRole.Values.ORGANISATION_MANAGER, PermissionRole.Values.COACH, PermissionRole.Values.USER})
+    public Response getOrganisation(@Context SecurityContext cx) {
+        return Response.ok(this.organisationLogic.getOrganisationInfo(cx)).build();
+    }
+
+
 }
